@@ -1,0 +1,18 @@
+{
+	"files.associations": {
+		"minishell.h": "c",
+		"history.h": "c",
+		"ioctl.h": "c",
+		"wait.h": "c",
+		"libft.h": "c",
+		"readline.h": "c",
+		"get_next_line.h": "c",
+		"signal.h": "c",
+		"features.h": "c",
+		"sig_atomic_t.h": "c",
+		"unistd.h": "c",
+		"stdio.h": "c",
+		"fcntl.h": "c",
+		"dirent.h": "c"
+	}
+}

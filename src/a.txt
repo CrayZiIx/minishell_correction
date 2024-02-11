@@ -1,0 +1,2 @@
+ft_strtrim_all.c
+utils_1.c
