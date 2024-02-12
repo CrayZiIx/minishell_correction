@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 00:02:33 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 16:12:11 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:49:22 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_export(t_prompt *prompt)
 				prompt->envp[ij[1]] = ft_strdup(argv[ij[0]]);
 			}
 			else if (!pos)
-				prompt->envp = ft_extend_matrix(prompt->envp, argv[ij[1]]);
+				prompt->envp = ft_extend_matrix(prompt->envp, argv[ij[0]]);
 			ij[0]++;
 		}
 	}

@@ -6,14 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:29:46 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 20:04:20 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:29:23 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 extern int g_state;
-
 
 int	builtins(t_prompt *prompt, t_list *cmd, int *is_exit, int n)
 {

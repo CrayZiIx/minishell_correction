@@ -6,12 +6,16 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:12:49 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 20:44:42 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:26:13 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+struct {
+	int state;
+	t_gcan gc;
+}	g_state;
 
 extern int		g_state;
 
@@ -53,10 +57,10 @@ static t_prompt	init_var(t_prompt prompt, char *s, char **argv)
 	prompt.envp = ft_setenv("SHLVL", num, prompt.envp, 5);
 	free(num);
 	s = ft_getenv("PATH", prompt.envp, 4);
-	if (!s)
-		prompt.envp = ft_setenv("PATH", \
-		"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", prompt.envp, 4);
-	free(s);
+	// if (!s)
+	// 	prompt.envp = ft_setenv("PATH", \
+	// 	"/usr/local/sbin:/usr/local/bin:/usr/bin:/bin", prompt.envp, 4);
+	// free(s);
 	s = ft_getenv("_", prompt.envp, 1);
 	if (!s)
 		prompt.envp = ft_setenv("_", argv[0], prompt.envp, 1);
@@ -83,6 +87,7 @@ int				main(int ac, char **av, char **envp)
 	char		*out;
 	t_prompt	prompt;
 
+	gc_init(&g_state.gc);
 	prompt = init_prompt(av, envp);
 	while (av && ac)
 	{
@@ -92,5 +97,6 @@ int				main(int ac, char **av, char **envp)
 		if (!check_args(out, &prompt))
 			break ;
 	}
+	gc_clean(&g_state.gc);
 	exit(g_state);
 }

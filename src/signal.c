@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:28:57 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 20:03:59 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:40:07 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	handle_sigint(int sig)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_putchar_fd('\n', STDIN_FILENO);
-		// ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:31:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 18:38:50 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:34:35 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	*parse_args(char **args, t_prompt *p)
 void	*check_args(char *out, t_prompt *p)
 {
 	char	**a;
-	t_input	*node;
+	t_input	*n;
 
 	if (!out)
 	{
@@ -79,17 +79,38 @@ void	*check_args(char *out, t_prompt *p)
 		return ("");
 	p = parse_args(a, p);
 	if (p && p->cmds)
-	{
-		node = p->cmds->content;
-	}
-	if (p && p->cmds && node && node->full_cmd && ft_lstsize(p->cmds) == 1)
-	{
-		p->envp = ft_setenv("_", node->full_cmd[ft_matrixlen(node->full_cmd) - 1], \
+		n = p->cmds->content;
+	if (p && p->cmds && n && n->full_cmd && ft_lstsize(p->cmds) == 1)
+		p->envp = ft_setenv("_", n->full_cmd[ft_matrixlen(n->full_cmd) - 1], \
 			p->envp, 1);
-	}
 	if (p && p->cmds)
-	{
 		ft_lstclear(&p->cmds, free_content);
-	}
 	return (p);
-}
+}// {
+// 	char	**a;
+// 	t_input	*node;
+
+// 	if (!out)
+// 	{
+// 		printf("exit\n");
+// 		return (NULL);
+// 	}
+// 	if (out[0] != '\0')
+// 		add_history(out);
+// 	a = ft_cmdtrim(out, " ");
+// 	free(out);
+// 	if (!a)
+// 		ft_perror(QUOTE, NULL, 1);
+// 	if (!a)
+// 		return ("");
+// 	p = parse_args(a, p);
+// 	if (p && p->cmds)
+// 		node = p->cmds->content;
+// 	if (p && p->cmds && node && node->full_cmd && ft_lstsize(p->cmds) == 1)
+// 		p->envp = ft_setenv("_", node->full_cmd[ft_matrixlen(node->full_cmd) - 1], \
+// 			p->envp, 1);
+// 	if (p && p->cmds)
+// 		ft_lstclear(&p->cmds, free_content);
+// 	return (p);
+// }
+

@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:58:29 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 20:03:18 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:06:17 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,5 @@ void	*check_args(char *out, t_prompt *p);
 
 
 char	*ft_getprompt(t_prompt prompt);
-
-
-
-
-
-
-
 
 #endif

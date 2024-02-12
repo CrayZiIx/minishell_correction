@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 21:04:33 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 18:38:24 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:29:02 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,27 @@ void	*ft_perror(int err_type, char *param, int err)
 {
 	g_state = err;
 	if (err_type == QUOTE)
-		ft_putstr_fd("Error: don't u finish what you start ? !\n", 2);
+		ft_putstr_fd("Error: missing quote !\n", 2);
 	else if (err_type == NO_DIR)
 		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
 	else if (err_type == NO_PERM)
 		ft_putstr_fd("Error: ask ur mom before using this !\n", 2);
 	else if (err_type == NOT_CMD)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, can u please type a real cmd !\n", 2);
 	else if (err_type == DUP_ERR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, dup2 failed ...\n", 2);
 	else if (err_type == FORK_ERR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, fork failed sorry !\n", 2);
 	else if (err_type == PIPE_ERR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, wtf  !\n", 2);
 	else if (err_type == PIPES_ERR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, pfff !\n", 2);
 	else if (err_type == MEM)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, mem this directory doesn't exist !\n", 2);
 	else if (err_type == IS_DIR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, is dir this directory doesn't exist !\n", 2);
 	else if (err_type == NOT_DIR)
-		ft_putstr_fd("Error: bro, this directory doesn't exist !\n", 2);
+		ft_putstr_fd("Error: bro, maybe is the way !\n", 2);
 	ft_putendl_fd(param, 2);
 	return (NULL);
 }
@@ -93,7 +93,7 @@ int	ft_exit(t_list *cmd, int *is_exit)
 		ft_putstr_fd("minishell: exit: too many args\n", 2);
 		return (1);
 	}
-	// status[0] %= 256 + 256 * (status[0] < 0);
+	status[0] %= 256 + 256 * (status[0] < 0);
 	return (status[0]);
 }
 
