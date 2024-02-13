@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:31:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/12 16:34:35 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:52:45 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern int g_state;
+extern t_glob	global;
 
 static char **split_all(char **args, t_prompt *prompt)
 {
@@ -44,13 +44,13 @@ static void	*parse_args(char **args, t_prompt *p)
 	if (!p->cmds)
 		return (p);
 	i = ft_lstsize(p->cmds);
-	g_state = builtins(p, p->cmds, &is_exit, 0);
+	global.g_state = builtins(p, p->cmds, &is_exit, 0);
 	while (i-- > 0)
-		waitpid(-1, &g_state, 0);
-	if (!is_exit && g_state == 13)
-		g_state = 0;
-	if (g_state > 255)
-		g_state = g_state / 255;
+		waitpid(-1, &global.g_state, 0);
+	if (!is_exit && global.g_state == 13)
+		global.g_state = 0;
+	if (global.g_state > 255)
+		global.g_state = global.g_state / 255;
 	if (args && is_exit)
 	{
 		ft_lstclear(&p->cmds, free_content);
@@ -72,7 +72,6 @@ void	*check_args(char *out, t_prompt *p)
 	if (out[0] != '\0')
 		add_history(out);
 	a = ft_cmdtrim(out, " ");
-	free(out);
 	if (!a)
 		ft_perror(QUOTE, NULL, 1);
 	if (!a)
@@ -86,31 +85,4 @@ void	*check_args(char *out, t_prompt *p)
 	if (p && p->cmds)
 		ft_lstclear(&p->cmds, free_content);
 	return (p);
-}// {
-// 	char	**a;
-// 	t_input	*node;
-
-// 	if (!out)
-// 	{
-// 		printf("exit\n");
-// 		return (NULL);
-// 	}
-// 	if (out[0] != '\0')
-// 		add_history(out);
-// 	a = ft_cmdtrim(out, " ");
-// 	free(out);
-// 	if (!a)
-// 		ft_perror(QUOTE, NULL, 1);
-// 	if (!a)
-// 		return ("");
-// 	p = parse_args(a, p);
-// 	if (p && p->cmds)
-// 		node = p->cmds->content;
-// 	if (p && p->cmds && node && node->full_cmd && ft_lstsize(p->cmds) == 1)
-// 		p->envp = ft_setenv("_", node->full_cmd[ft_matrixlen(node->full_cmd) - 1], \
-// 			p->envp, 1);
-// 	if (p && p->cmds)
-// 		ft_lstclear(&p->cmds, free_content);
-// 	return (p);
-// }
-
+}

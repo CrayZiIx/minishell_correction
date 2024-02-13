@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liguyon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:37:11 by liguyon           #+#    #+#             */
-/*   Updated: 2023/04/26 16:27:56 by liguyon          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:25:35 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static void	itoa_alt(int n, int len, char *res)
 	ft_strrev(res);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, void *gc)
 {
 	char	*res;
 	int		len;
 
 	len = itoa_len(n);
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = gc_malloc(gc, sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
 	if (!n)

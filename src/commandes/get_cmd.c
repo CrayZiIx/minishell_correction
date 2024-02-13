@@ -6,11 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 04:24:30 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 20:04:22 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:48:13 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+extern t_glob global;
 
 static char	*find_command(char **env_path, char *cmd, char *full_path)
 {
@@ -21,12 +23,12 @@ static char	*find_command(char **env_path, char *cmd, char *full_path)
 	full_path = NULL;
 	while (env_path && env_path[++i])
 	{
-		free(full_path);
-		temp = ft_strjoin(env_path[i], "/");
+		// free(full_path);
+		temp = ft_strjoin(env_path[i], "/", &global.gc);
 		if (!temp)
 			return (NULL);
-		full_path = ft_strjoin(temp, cmd);
-		free(temp);
+		full_path = ft_strjoin(temp, cmd, &global.gc);
+		// free(temp);
 		if (!full_path)
 			return (NULL);
 		if (access(full_path, F_OK) == 0)
@@ -34,7 +36,7 @@ static char	*find_command(char **env_path, char *cmd, char *full_path)
 	}
 	if (!env_path || !env_path[i])
 	{
-		free(full_path);
+		// free(full_path);
 		return (NULL);
 	}
 	return (full_path);
@@ -51,16 +53,16 @@ static DIR	*cmd_checks(t_prompt *prompt, t_list *cmd, char ***s, char *path)
 		dir = opendir(*node->full_cmd);
 	if (node && node->full_cmd && ft_strchr(*node->full_cmd, '/') && !dir)
 	{
-		*s = ft_split(*node->full_cmd, '/');
-		node->full_path = ft_strdup(*node->full_cmd);
-		free(node->full_cmd[0]);
-		node->full_cmd[0] = ft_strdup(s[0][ft_matrixlen(*s) - 1]);
+		*s = ft_split(*node->full_cmd, '/', &global.gc);
+		node->full_path = ft_strdup(*node->full_cmd, &global.gc);
+		// free(node->full_cmd[0]);
+		node->full_cmd[0] = ft_strdup(s[0][ft_matrixlen(*s) - 1], &global.gc);
 	}
 	else if (!is_builtins(node) && node && node->full_cmd && !dir)
 	{
 		path = ft_getenv("PATH", prompt->envp, 4);
-		*s = ft_split(path, ':');
-		free(path);
+		*s = ft_split(path, ':', &global.gc);
+		// free(path);
 		node->full_path = find_command(*s, *node->full_cmd, node->full_path);
 		if (!node->full_path || !node->full_cmd[0] || !node->full_cmd[0][0])
 			ft_perror(NOT_CMD, *node->full_cmd, 127);
@@ -93,6 +95,7 @@ void	*exec_cmd(t_prompt *prompt, t_list *cmd)
 	int		fd[2];
 
 	get_cmd(prompt, cmd, NULL, NULL);
+	
 	if (pipe(fd) == -1)
 		return (ft_perror(PIPE_ERR, NULL, 1));
 	if (!check_to_fork(prompt, cmd, fd))

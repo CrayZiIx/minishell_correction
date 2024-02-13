@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liguyon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:02:31 by liguyon           #+#    #+#             */
-/*   Updated: 2023/04/26 16:28:27 by liguyon          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:07:42 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	in_set(char c, char const *set)
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set, void *gc)
 {
 	size_t	i;
 	size_t	j;
@@ -40,5 +40,5 @@ char	*ft_strtrim(char const *s1, char const *set)
 	j = ft_strlen(s1) - 1;
 	while (in_set(s1[j], set))
 		j--;
-	return (ft_substr(s1, i, j - i + 1));
+	return (ft_substr(s1, i, j - i + 1, gc));
 }

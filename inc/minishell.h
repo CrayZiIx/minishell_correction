@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:58:29 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/12 17:06:17 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/13 23:49:00 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 /*------------*/
 /*--INCLUDES--*/
 /*------------*/
+#include "../src/gc/gc.h"
 #include "../src/libft/libft.h"
 #include "./get_next_line.h"
 #include <signal.h>
@@ -29,8 +30,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
-
 # define READ_END 0
 # define WRITE_END 1
 
@@ -38,6 +37,12 @@
 /*--------------*/
 /*--STRUCTURES--*/
 /*--------------*/
+
+typedef struct	s_glob{
+	t_gcan	gc;
+	int		g_state;
+}				t_glob;
+
 typedef struct	s_prompt{
 	t_list		*cmds;
 	char		**envp;
@@ -72,6 +77,7 @@ typedef enum	e_rl_error{
 /*--[exec.c]--*/
 void	*check_to_fork(t_prompt *prompt, t_list *cmd, int fd[2]);
 /*--[signal.c]--*/
+void	handle_sigint_cmd(int sig);
 void	handle_sigint(int sig);
 /*--[error.c]--*/
 void	*ft_perror(int err_type, char *param, int err);

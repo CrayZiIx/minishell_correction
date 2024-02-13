@@ -6,18 +6,19 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:26:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/10 21:28:56 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 00:33:41 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern int g_state;
+extern t_glob	global;
 
 int get_fd(int oldfd, char *path, int flags[2])
 {
 	int fd;
 
+	// printf("PATH = [%s]\n", path);
 	if (oldfd > 2)
 		close(oldfd);
 	if (!path)
@@ -54,10 +55,10 @@ t_input	*get_pipeout1(t_input *node, char **args, int *i)
 		if (node->pipeout != -1)
 		{
 			ft_putendl_fd(nl, 2);
-			g_state = 2;
+			global.g_state = 2;
 		}
 		else
-			g_state = 1;
+			global.g_state = 1;
 	}
 	return (node);
 }
@@ -66,6 +67,9 @@ t_input *get_pipeout2(t_input *node, char **args, int *i)
 {
 	char *nl;
 	int	flags[2];
+
+	flags[0] = 1;
+	flags[1] = 0;
 	nl = "minishell: syntax error near unexpected token 'newline'";
 	(*i)++;
 	if (args[++(*i)])
@@ -76,10 +80,10 @@ t_input *get_pipeout2(t_input *node, char **args, int *i)
 		if (node->pipeout != -1)
 		{
 			ft_putendl_fd(nl, 2);
-			g_state = 2;
+			global.g_state = 2;
 		}
 		else
-			g_state = 1;
+			global.g_state = 1;
 	}
 	return (node);
 }
@@ -101,10 +105,10 @@ t_input *get_pipein1(t_input *node, char **args, int *i)
 		if (node->pipein != -1)
 		{
 			ft_putendl_fd(nl, 2);
-			g_state = 2;
+			global.g_state = 2;
 		}
 		else
-			g_state = 1;
+			global.g_state = 1;
 	}
 	return (node);
 }
@@ -132,7 +136,7 @@ t_input *get_pipein2(t_input *node, char **args, int *i)
 		if (node->pipein != -1)
 		{
 			ft_putendl_fd(nl, 2);
-			g_state = 2;
+			global.g_state = 2;
 		}
 	}
 	return (node);}

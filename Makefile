@@ -46,14 +46,16 @@ SRC	= main.c \
 		utils/ft_matrix.c \
 		utils/ft_matrix_2.c 
 
-
-
 # lifbt
 LFTDIR = $(SRCDIR)/libft
 LFT = $(LFTDIR)/libft.a
 CFLAGS += -I$(LFTDIR)
 CLFLAGS += -L$(LFTDIR) -lft
 
+GCDIR = $(SRCDIR)/gc
+GC = $(LFTDIR)/gc.a
+CFLAGS += -I$(GCDIR)
+CLFLAGS += -L$(GCDIR) -lgc
 
 ##############
 #
@@ -63,7 +65,7 @@ CLFLAGS += -L$(LFTDIR) -lft
 
 .PHONY:	all clean fclean re
 
-all:	$(LFT) $(NAME)
+all:	$(GC) $(LFT) $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $^ $(CLFLAGS) -lreadline
@@ -71,10 +73,12 @@ $(NAME): $(OBJ)
 clean:
 	rm -rf $(OBJDIR)
 	make -C $(LFTDIR) clean
+	make -C $(GCDIR) clean
 
 fclean:	clean
 	rm -f $(NAME)
 	make -C $(LFTDIR) fclean
+	make -C $(GCDIR) fclean
 
 
 re:	fclean all
@@ -89,3 +93,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 # lifbt
 $(LFT):
 	make -C $(LFTDIR)
+
+$(GC):
+	make -C $(GCDIR)

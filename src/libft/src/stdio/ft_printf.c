@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liguyon <liguyon@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:52:42 by liguyon           #+#    #+#             */
-/*   Updated: 2023/07/28 08:26:52 by liguyon          ###   ########.fr       */
+/*   Updated: 2024/02/13 19:28:49 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,7 @@ int	ft_printf_str(char *str)
 
 int	ft_printf_int(int nbr)
 {
-	int		printed;
-	char	*n;
-
-	n = ft_itoa(nbr);
-	if (!n)
-		return (0);
-	printed = ft_printf_str(n);
-	free(n);
-	return (printed);
+	return (nbr);
 }
 
 int	ft_printf_fmt(char fmt, va_list pa)

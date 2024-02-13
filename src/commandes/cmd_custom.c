@@ -6,11 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:15:03 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/10 02:24:47 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 00:24:47 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+extern t_glob global;
 
 static void	update_output(char ***matrix, int fd)
 {
@@ -25,10 +27,10 @@ static void	update_output(char ***matrix, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		temp = ft_strtrim(line, "\n");
+		temp = ft_strtrim(line, "\n", &global.gc);
 		free(line);
 		aux = ft_extend_matrix(aux, temp);
-		free(temp);
+		// free(temp);
 	}
 	ft_free_matrix(matrix);
 	*matrix = aux;
@@ -45,11 +47,12 @@ void	exec_custom(char ***out, char *full, char *args, char **envp)
 	if (!pid)
 	{
 		close(fd[READ_END]);
-		matrix = ft_split(args, ' ');
+		matrix = ft_split(args, ' ', &global.gc);
 		dup2(fd[WRITE_END], STDOUT_FILENO);
 		close(fd[WRITE_END]);
 		if (!access(full, F_OK))
 			execve(full, matrix, envp);
+		gc_clean(&global.gc);
 		exit (1);
 	}
 	close(fd[WRITE_END]);

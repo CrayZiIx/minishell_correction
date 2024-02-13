@@ -6,17 +6,19 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 04:58:07 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/12 17:22:39 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:18:13 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+extern t_glob global;
+
 static t_input	*ft_init(void)
 {
 	t_input	*input;
 
-	input = malloc(sizeof(t_input));
+	input = gc_malloc(&global.gc, sizeof(t_input));
 	if (!input)
 		return (NULL);
 	input->full_cmd = NULL;
@@ -73,7 +75,7 @@ static char	**get_trimmed(char **args)
 	while (temp && temp[++j])
 	{
 		aux = ft_strtrim_all(temp[j], 0, 0);
-		free(temp[j]);
+		// free(temp[j]);
 		temp[j] = aux;
 	}
 	return (temp);

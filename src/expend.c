@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 04:44:47 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/12 16:30:02 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:26:04 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern int	g_state;
+extern t_glob	global;
 
 char	*expand_path(char *s, int i, int quotes[2], char *var)
 {
@@ -28,18 +28,18 @@ char	*expand_path(char *s, int i, int quotes[2], char *var)
 		if (!quotes[0] && !quotes[1] && s[i] == '~' && (i == 0 || \
 			s[i - 1] != '$'))
 		{
-			aux = ft_substr(s, 0, i);
-			path = ft_strjoin(aux, var);
-			free(aux);
-			aux = ft_substr(s, i + 1, ft_strlen(s));
-			free(s);
-			s = ft_strjoin(path, aux);
-			free(aux);
-			free(path);
+			aux = ft_substr(s, 0, i, &global.gc);
+			path = ft_strjoin(aux, var, &global.gc);
+			// free(aux);
+			aux = ft_substr(s, i + 1, ft_strlen(s), &global.gc);
+			// free(s);
+			s = ft_strjoin(path, aux, &global.gc);
+			// free(aux);
+			// free(path);
 			return (expand_path(s, i + ft_strlen(var) - 1, quotes, var));
 		}
 	}
-	free(var);
+	// free(var);
 	return (s);
 }
 
@@ -53,19 +53,19 @@ static char	*get_substr_var(char *s, int i, t_prompt *prompt)
 	pos = ft_strchars_i(&s[i], "|\"\'$?>< ") + (ft_strchr("$?", s[i]) != 0);
 	if (pos == -1)
 		pos = ft_strlen(s) - 1;
-	aux = ft_substr(s, 0, i - 1);
+	aux = ft_substr(s, 0, i - 1, &global.gc);
 	var = ft_getenv(&s[i], prompt->envp, \
 		ft_strchars_i(&s[i], "\"\'$|>< "));
 	if (!var && s[i] == '$')
-		var = ft_itoa(prompt->pid);
+		var = ft_itoa(prompt->pid, &global.gc);
 	else if (!var && s[i] == '?')
-		var = ft_itoa(g_state);
-	path = ft_strjoin(aux, var);
-	free(aux);
-	aux = ft_strjoin(path, &s[i + pos]);
-	free(var);
-	free(path);
-	free(s);
+		var = ft_itoa(global.g_state, &global.gc);
+	path = ft_strjoin(aux, var, &global.gc);
+	// free(aux);
+	aux = ft_strjoin(path, &s[i + pos], &global.gc);
+	// free(var);
+	// free(path);
+	// free(s);
 	return (aux);
 }
 

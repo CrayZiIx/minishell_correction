@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liguyon <liguyon@student.42lehavre.fr>     +#+  +:+       +#+         #
+#    By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 11:03:52 by liguyon           #+#    #+#              #
-#    Updated: 2023/09/29 15:53:54 by liguyon          ###   ########.fr        #
+#    Updated: 2024/02/13 18:43:52 by jolecomt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ SRC_		:= stdlib/ft_calloc.c \
 		   allocators/arena.c \
 		   allocators/arena_alloc.c
 
+
 SRC			:= $(addprefix $(SRC_DIR)/, $(SRC_))
 
 # Objects
@@ -85,6 +86,11 @@ OBJ			:= $(addprefix $(OBJ_DIR)/, $(SRC_:.c=.o))
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -I $(INC_DIR) -O3
 
+GCDIR = ../gc
+GC = ../libgc.a
+CFLAGS += -I$(GCDIR)
+CLFLAGS = -L$(GCDIR) -lgc
+
 # Archive
 AR			:= ar rcs
 
@@ -93,7 +99,10 @@ $(NAME):	$(OBJ)
 		$(AR) $@ $^
 		ranlib $@
 
-all:	$(NAME)
+all:	$(GC) $(NAME)
+
+$(GC):
+	make -C $(GCDIR)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 		@mkdir -p $(dir $@)
