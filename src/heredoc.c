@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:29:43 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/13 19:09:54 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:58:02 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ char	*get_here_str(char *s[2], size_t len, char *limit, char *warn)
 	{
 		temp = s[1];
 		s[1] = ft_strjoin(s[1], s[0], &global.gc);
-		// free(temp);
-		// free(s[0]);
 		s[0] = readline("> ");
 		if (!s[0])
 		{
@@ -34,10 +32,8 @@ char	*get_here_str(char *s[2], size_t len, char *limit, char *warn)
 		}
 		temp = s[0];
 		s[0] = ft_strjoin(s[0], "\n", &global.gc);
-		// free(temp);
 		len = ft_strlen(s[0]) - 1;
 	}
-	// free(s[0]);
 	return (s[1]);
 }
 
