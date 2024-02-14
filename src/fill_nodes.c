@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 04:58:07 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 16:57:34 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:16:55 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static t_input	*get_params(t_input *node, char **a[2], int *i)
 {
 	if (a[0][*i])
 	{
-		if (a[0][*i][0] == '>' && a[0][*i + 1] && a[0][*i + 1][0] == '>')
+		if (a[0][*i][0] == '>' && a[0][*i + 1] && a[0][*i + 1][0] != '<')
+			node = get_pipeout1(node, a[1], i);
+		else if (a[0][*i][0] == '<' && a[0][*i + 1] && a[0][*i + 1][0] != '>' )
+			node = get_pipein1(node, a[1], i);
+		else if (a[0][*i][0] == '>' && a[0][*i + 1] && a[0][*i + 1][0] == '>')
 			node = get_pipeout2(node, a[1], i);
 		else if (a[0][*i][0] == '<' && a[0][*i + 1] && \
 			a[0][*i + 1][0] == '<')
 			node = get_pipein2(node, a[1], i);
-		else if (a[0][*i][0] == '>' && a[0][*i + 1] && a[0][*i + 1][0] != '<')
-			node = get_pipeout1(node, a[1], i);
-		else if (a[0][*i][0] == '<' && a[0][*i + 1] && a[0][*i + 1][0] != '>' )
-			node = get_pipein1(node, a[1], i);
 		else if (a[0][*i][0] != '|')
 			node->full_cmd = ft_extend_matrix(node->full_cmd, a[1][*i]);
 		else
@@ -75,7 +75,6 @@ static char	**get_trimmed(char **args)
 	while (temp && temp[++j])
 	{
 		aux = ft_strtrim_all(temp[j], 0, 0);
-		// free(temp[j]);
 		temp[j] = aux;
 	}
 	return (temp);

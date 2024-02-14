@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 02:27:04 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 00:02:00 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:58:20 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	child_builtin(t_prompt* prompt, t_input *node, int l, t_list *cmd)
 		ft_putmatrix_fd(prompt->envp, 1, 1);
 		global.g_state = 0;
 	}
+	printf("g_state ! [%d]\n", global.g_state);
 }
 
 static void	*child_redir(t_list *cmd, int fd[2])

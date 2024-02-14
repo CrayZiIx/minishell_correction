@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:26:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 16:57:31 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:53:07 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,10 @@ int get_fd(int oldfd, char *path, int flags[2])
 
 t_input	*get_pipeout1(t_input *node, char **args, int *i)
 {
-	// char	*nl;
 	int		flags[2];
 
 	flags[0] = 1;
 	flags[1] = 0;
-	// nl = "minishell: syntax error near unexpected token `newline'";
 	(*i)++;
 	if (args[*i])
 		node->pipeout = get_fd(node->pipeout, args[*i], flags);
@@ -63,11 +61,7 @@ t_input	*get_pipeout1(t_input *node, char **args, int *i)
 	{
 		*i = -1;
 		if (node->pipeout != -1)
-		{
 			print_error_heredoc('0', i);
-			// ft_putendl_fd(nl, 2);
-			// global.g_state = 2;
-		}
 		else
 			global.g_state = 1;
 	}

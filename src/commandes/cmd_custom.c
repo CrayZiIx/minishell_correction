@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 01:15:03 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 00:24:47 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:33:53 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	exec_custom(char ***out, char *full, char *args, char **envp)
 		exit (1);
 	}
 	close(fd[WRITE_END]);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &global.g_state, 0);
 	update_output(out, fd[READ_END]);
 	close(fd[READ_END]);
 }

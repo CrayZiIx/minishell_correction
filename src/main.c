@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:12:49 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 00:04:16 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:50:05 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void		ft_getpid(t_prompt *prompt)
 	}
 	if (!pid)
 	{
-		// ft_free_matrix(&prompt->envp);
 		gc_clean(&global.gc);
 		exit(1);	
 	}
@@ -90,6 +89,9 @@ int				main(int ac, char **av, char **envp)
 		signal(SIGINT, handle_sigint_cmd);
 		if (!check_args(out, &prompt))
 			break ;
+		// if (WIFEXITED(global.g_state))
+		global.g_state = WEXITSTATUS(global.g_state);
+			
 	}
 	gc_clean(&global.gc);
 	exit(global.g_state);

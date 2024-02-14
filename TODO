@@ -1,4 +1,6 @@
 FIX CODE ERROR ON PIPE
-<<>> | ERROR
+<< > | ERROR
 >><< | ERROR
 WHAT IS FLAG ON GET_PARAMS
+< < aa | done
+error code only about last command of chained command 

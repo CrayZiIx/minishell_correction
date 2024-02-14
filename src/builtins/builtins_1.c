@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:29:46 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 00:07:25 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:53:42 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	ft_cd(t_prompt *p)
 	if (!aux)
 		aux = ft_strdup("", &global.gc);
 	str[1] = ft_extend_matrix(NULL, aux);
-	// free(aux);
 	cd_error(str);
 	if (!global.g_state)
 		p->envp = ft_setenv("OLDPWD", str[1][1], p->envp, 6);
