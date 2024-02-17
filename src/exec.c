@@ -6,38 +6,39 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 02:27:04 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 17:58:20 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:36:32 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern t_glob	global;
+extern t_glob	g_global;
 
-void	child_builtin(t_prompt* prompt, t_input *node, int l, t_list *cmd)
+void	child_builtin(t_prompt *prompt, t_input *node, int l, t_list *cmd)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!is_builtins(node) && node->full_cmd)
 		execve(node->full_path, node->full_cmd, prompt->envp);
-	else if (is_builtins(node) && node->full_cmd && !ft_strncmp(*node->full_cmd, "pwd", l) \
+	else if (is_builtins(node) && node->full_cmd \
+		&& !ft_strncmp(*node->full_cmd, "pwd", l) \
 		&& l == 3)
-		global.g_state = ft_pwd();
+		g_global.g_state = ft_pwd();
 	else if (is_builtins(node) && node->full_cmd && \
 		!ft_strncmp(*node->full_cmd, "echo", l) && l == 4)
-		global.g_state = ft_echo(cmd);
+		g_global.g_state = ft_echo(cmd);
 	else if (is_builtins(node) && node->full_cmd && \
 		!ft_strncmp(*node->full_cmd, "env", l) && l == 3)
 	{
 		ft_putmatrix_fd(prompt->envp, 1, 1);
-		global.g_state = 0;
+		g_global.g_state = 0;
 	}
-	printf("g_state ! [%d]\n", global.g_state);
+	printf("g_state ! [%d]\n", g_global.g_state);
 }
 
 static void	*child_redir(t_list *cmd, int fd[2])
 {
-	t_input *node;
+	t_input	*node;
 
 	node = cmd->content;
 	if (node->pipein != STDIN_FILENO)
@@ -71,13 +72,13 @@ void	*child_process(t_prompt *prompt, t_list *cmd, int fd[2])
 	close(fd[READ_END]);
 	child_builtin(prompt, node, l, cmd);
 	ft_lstclear(&prompt->cmds, free_content);
-	gc_clean(&global.gc);
-	exit(global.g_state);
+	gc_clean(&g_global.gc);
+	exit(g_global.g_state);
 }
 
 void	exec_fork(t_prompt *prompt, t_list *cmd, int fd[2])
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid < 0)
@@ -89,9 +90,10 @@ void	exec_fork(t_prompt *prompt, t_list *cmd, int fd[2])
 	else if (!pid)
 		child_process(prompt, cmd, fd);
 }
+
 void	*check_to_fork(t_prompt *prompt, t_list *cmd, int fd[2])
 {
-	t_input *node;
+	t_input	*node;
 	DIR		*dir;
 
 	node = cmd->content;
@@ -100,13 +102,14 @@ void	*check_to_fork(t_prompt *prompt, t_list *cmd, int fd[2])
 		dir = opendir(*node->full_cmd);
 	if (node->pipein == -1 || node->pipeout == -1)
 		return (NULL);
-	if ((node->full_path && access(node->full_path, X_OK) == 0) || is_builtins(node))
+	if ((node->full_path && access(node->full_path, X_OK) == 0) \
+		|| is_builtins(node))
 		exec_fork(prompt, cmd, fd);
 	else if (!is_builtins(node) && ((node->full_path && \
 		!access(node->full_path, F_OK)) || dir))
-		global.g_state = 126;
+		g_global.g_state = 126;
 	else if (!is_builtins(node) && node->full_cmd)
-		global.g_state = 127;
+		g_global.g_state = 127;
 	if (dir)
 		closedir(dir);
 	return ("");

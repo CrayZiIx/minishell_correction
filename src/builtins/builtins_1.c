@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 18:29:46 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 17:53:42 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:24:27 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_glob	global;
+extern t_glob	g_global;
 
 
 int	builtins(t_prompt *prompt, t_list *cmd, int *is_exit, int n)
@@ -26,13 +26,13 @@ int	builtins(t_prompt *prompt, t_list *cmd, int *is_exit, int n)
 		if (a)
 			n = ft_strlen(*a);
 		if (a && !ft_strncmp(*a, "exit", n) && n == 4)
-			global.g_state = ft_exit(cmd, is_exit);
+			g_global.g_state = ft_exit(cmd, is_exit);
 		else if (!cmd->next && a && !ft_strncmp(*a, "cd", n) && n == 2)
-			global.g_state = ft_cd(prompt);
+			g_global.g_state = ft_cd(prompt);
 		else if (!cmd->next && a && !ft_strncmp(*a, "export", n) && n == 6)
-			global.g_state = ft_export(prompt);
+			g_global.g_state = ft_export(prompt);
 		else if (!cmd->next && a && !ft_strncmp(*a, "unset", n) && n == 5)
-			global.g_state = ft_unset(prompt);
+			g_global.g_state = ft_unset(prompt);
 		else
 		{
 			//signal(SIGINT, handle_sigint_cmd);
@@ -41,7 +41,7 @@ int	builtins(t_prompt *prompt, t_list *cmd, int *is_exit, int n)
 		}
 		cmd = cmd->next;
 	}
-	return (global.g_state);
+	return (g_global.g_state);
 }
 
 int is_builtins(t_input *node)
@@ -75,23 +75,23 @@ int	ft_cd(t_prompt *p)
 	char	**str[2];
 	char	*aux;
 
-	global.g_state = 0;
+	g_global.g_state = 0;
 	str[0] = ((t_input *)p->cmds->content)->full_cmd;
 	aux = ft_getenv("HOME", p->envp, 4);
 	if (!aux)
-		aux = ft_strdup("", &global.gc);
+		aux = ft_strdup("", &g_global.gc);
 	str[1] = ft_extend_matrix(NULL, aux);
 	cd_error(str);
-	if (!global.g_state)
+	if (!g_global.g_state)
 		p->envp = ft_setenv("OLDPWD", str[1][1], p->envp, 6);
 	aux = getcwd(NULL, 0);
 	if (!aux)
-		aux = ft_strdup("", &global.gc);
+		aux = ft_strdup("", &g_global.gc);
 	str[1] = ft_extend_matrix(str[1], aux);
 	free(aux);
 	p->envp = ft_setenv("PWD", str[1][2], p->envp, 3);
 	ft_free_matrix(&str[1]);
-	return (global.g_state);
+	return (g_global.g_state);
 }
 
 int	ft_pwd(void)

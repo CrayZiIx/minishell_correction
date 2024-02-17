@@ -6,14 +6,14 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:28:57 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 00:04:35 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:24:27 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// int		global.g_state;
-t_glob	global;
+// int		g_global.g_state;
+t_glob	g_global;
 
 void	handle_sigint(int sig)
 {

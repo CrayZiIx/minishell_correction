@@ -6,19 +6,19 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 04:58:07 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 17:16:55 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:39:04 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern t_glob global;
+extern t_glob	g_global;
 
 static t_input	*ft_init(void)
 {
 	t_input	*input;
 
-	input = gc_malloc(&global.gc, sizeof(t_input));
+	input = gc_malloc(&g_global.gc, sizeof(t_input));
 	if (!input)
 		return (NULL);
 	input->full_cmd = NULL;
@@ -26,15 +26,6 @@ static t_input	*ft_init(void)
 	input->pipein = STDIN_FILENO;
 	input->pipeout = STDOUT_FILENO;
 	return (input);
-}
-
-void *my_ptr(void *init_ptr)
-{
-	static void *ptr;
-
-	if (init_ptr)
-		ptr = init_ptr;
-	return (ptr);
 }
 
 static t_input	*get_params(t_input *node, char **a[2], int *i)

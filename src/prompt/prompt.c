@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 20:33:15 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/13 19:24:52 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:24:27 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_glob	global;
+extern t_glob	g_global;
 
 
 static char		*get_home(t_prompt prompt)
@@ -23,18 +23,18 @@ static char		*get_home(t_prompt prompt)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		pwd = ft_strdup("SDF", &global.gc);
+		pwd = ft_strdup("SDF", &g_global.gc);
 	home = ft_getenv("HOME", prompt.envp, 4);
 	if (home && home[0] && ft_strnstr(pwd, home, ft_strlen(home)))
 	{
 		temp = pwd;
-		pwd = ft_strjoin("~", &pwd[ft_strlen(home)], &global.gc);
+		pwd = ft_strjoin("~", &pwd[ft_strlen(home)], &g_global.gc);
 		// free(temp);
 	}
 	free(pwd);
-	pwd = ft_strjoin(home , " ", &global.gc);
+	pwd = ft_strjoin(home , " ", &g_global.gc);
 	// free(home);
-	home = ft_strjoin(" ", pwd, &global.gc);
+	home = ft_strjoin(" ", pwd, &g_global.gc);
 	// free(home);
 	return(pwd);
 }
@@ -81,7 +81,7 @@ static char		*get_home(t_prompt prompt)
 // 	temp = ft_strjoin(temp2, aux);
 // 	free(aux);
 // 	free(temp2);
-// 	// if (!global.g_state || global.g_state == -1)
+// 	// if (!g_global.g_state || g_global.g_state == -1)
 // 	// 	temp2 = ft_strjoin(temp, BLUE);
 // 	// else
 // 	// 	temp2 = ft_strjoin(temp, RED);

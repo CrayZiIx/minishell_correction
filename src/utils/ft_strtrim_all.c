@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 05:04:11 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/13 19:19:41 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:24:27 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern t_glob global;
+extern t_glob g_global;
 
 static int	malloc_len(char const *s1)
 {
@@ -49,7 +49,7 @@ char	*ft_strtrim_all(char const *s1, int squote, int dquote)
 	count = malloc_len(s1);
 	if (!s1 || count == -1)
 		return (NULL);
-	trimmed = gc_malloc(&global.gc, sizeof(char) * (ft_strlen(s1) - count + 1));
+	trimmed = gc_malloc(&g_global.gc, sizeof(char) * (ft_strlen(s1) - count + 1));
 	if (!trimmed)
 		return (NULL);
 	while (s1[i[0]])

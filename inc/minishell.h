@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:58:29 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/13 23:49:00 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:15:28 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,40 @@
 /*------------*/
 /*--INCLUDES--*/
 /*------------*/
-#include "../src/gc/gc.h"
-#include "../src/libft/libft.h"
-#include "./get_next_line.h"
-#include <signal.h>
-#include <sys/wait.h>
-#include <sys/ioctl.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
+# include "../src/gc/gc.h"
+# include "../src/libft/libft.h"
+# include "./get_next_line.h"
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <dirent.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <unistd.h>
 
 # define READ_END 0
 # define WRITE_END 1
 
-
 /*--------------*/
 /*--STRUCTURES--*/
 /*--------------*/
-
-typedef struct	s_glob{
+typedef struct s_glob
+{
 	t_gcan	gc;
 	int		g_state;
 }				t_glob;
 
-typedef struct	s_prompt{
+typedef struct s_prompt
+{
 	t_list		*cmds;
 	char		**envp;
 	pid_t		pid;
 }				t_prompt;
 
-typedef struct	s_input{
+typedef struct s_input
+{
 	char	**full_cmd;
 	char	*full_path;
 	int		pipein;
@@ -58,7 +59,9 @@ typedef struct	s_input{
 /*---------*/
 /*--TYPES--*/
 /*---------*/
-typedef enum	e_rl_error{
+
+typedef enum e_rl_error
+{
 	QUOTE = 1,
 	NO_DIR,
 	NO_PERM,
@@ -114,9 +117,9 @@ int		ft_unset(t_prompt *prompt);
 /*--[get_params.c ]--*/
 int		get_fd(int oldfd, char *path, int flags[2]);
 t_input	*get_pipeout1(t_input *node, char **args, int *i);
-t_input *get_pipeout2(t_input *node, char **args, int *i);
-t_input *get_pipein1(t_input *node, char **args, int *i);
-t_input *get_pipein2(t_input *node, char **args, int *i);
+t_input	*get_pipeout2(t_input *node, char **args, int *i);
+t_input	*get_pipein1(t_input *node, char **args, int *i);
+t_input	*get_pipein2(t_input *node, char **args, int *i);
 /*--[get_cmd.c]--*/
 void	*exec_cmd(t_prompt *prompt, t_list *cmd);
 /*--[expend.c]--*/
@@ -131,7 +134,8 @@ t_list	*fill_nodes(char **args, int i);
 /*--[parse_args.c]--*/
 void	*check_args(char *out, t_prompt *p);
 
+// char	*ft_getprompt(t_prompt prompt);
+void	*my_ptr(void *init_ptr);
 
-char	*ft_getprompt(t_prompt prompt);
 
 #endif

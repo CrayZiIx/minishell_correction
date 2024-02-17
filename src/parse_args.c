@@ -6,13 +6,13 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 21:31:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/13 21:52:45 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:24:27 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern t_glob	global;
+extern t_glob	g_global;
 
 static char **split_all(char **args, t_prompt *prompt)
 {
@@ -44,13 +44,13 @@ static void	*parse_args(char **args, t_prompt *p)
 	if (!p->cmds)
 		return (p);
 	i = ft_lstsize(p->cmds);
-	global.g_state = builtins(p, p->cmds, &is_exit, 0);
+	g_global.g_state = builtins(p, p->cmds, &is_exit, 0);
 	while (i-- > 0)
-		waitpid(-1, &global.g_state, 0);
-	if (!is_exit && global.g_state == 13)
-		global.g_state = 0;
-	if (global.g_state > 255)
-		global.g_state = global.g_state / 255;
+		waitpid(-1, &g_global.g_state, 0);
+	if (!is_exit && g_global.g_state == 13)
+		g_global.g_state = 0;
+	if (g_global.g_state > 255)
+		g_global.g_state = g_global.g_state / 255;
 	if (args && is_exit)
 	{
 		ft_lstclear(&p->cmds, free_content);

@@ -6,7 +6,7 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 23:56:11 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/11 16:24:56 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:15:53 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,12 @@ int	ft_strchars_i(const char *s, char *set)
 		i++;
 	}
 	return (-1);
+}
+void	*my_ptr(void *init_ptr)
+{
+	static void	*ptr;
+
+	if (init_ptr)
+		ptr = init_ptr;
+	return (ptr);
 }

@@ -6,17 +6,17 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 21:04:33 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 17:48:51 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:27:06 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern t_glob global;
+extern t_glob	g_global;
 
-void *ft_perror(int err_type, char *param, int err)
+void	*ft_perror(int err_type, char *param, int err)
 {
-	global.g_state = err;
+	g_global.g_state = err;
 	if (err_type == QUOTE)
 		ft_putstr_fd("Error: missing quote !\n", 2);
 	else if (err_type == NO_DIR)
@@ -43,9 +43,9 @@ void *ft_perror(int err_type, char *param, int err)
 	return (NULL);
 }
 
-int ft_atoi2(const char *nptr, long *nbr)
+int	ft_atoi2(const char *nptr, long *nbr)
 {
-	int sign;
+	int	sign;
 
 	sign = 1;
 	*nbr = 0;
@@ -68,10 +68,10 @@ int ft_atoi2(const char *nptr, long *nbr)
 	return (0);
 }
 
-int ft_exit(t_list *cmd, int *is_exit)
+int	ft_exit(t_list *cmd, int *is_exit)
 {
-	t_input *node;
-	long status[2];
+	t_input	*node;
+	long	status[2];
 
 	node = cmd->content;
 	*is_exit = !cmd->next;
@@ -97,20 +97,20 @@ int ft_exit(t_list *cmd, int *is_exit)
 	return (status[0]);
 }
 
-void cd_error(char **s[2])
+void	cd_error(char **s[2])
 {
-	DIR *dir;
+	DIR	*dir;
 
 	dir = NULL;
 	if (s[0][1])
 		dir = opendir(s[0][1]);
 	if (!s[0][1] && s[1][0] && !s[1][0][0])
 	{
-		global.g_state = 1;
+		g_global.g_state = 1;
 		ft_putstr_fd("minishell: error: HOME not set !\n", 2);
 	}
 	if (s[1][0] && !s[0][1])
-		global.g_state = chdir(s[1][0]) == -1;
+		g_global.g_state = chdir(s[1][0]) == -1;
 	if (s[0][1] && dir && access(s[0][1], F_OK) != -1)
 		chdir(s[0][1]);
 	else if (s[0][1] && access(s[0][1], F_OK) == -1)
@@ -121,18 +121,14 @@ void cd_error(char **s[2])
 		closedir(dir);
 }
 
-void free_content(void *content)
+void	free_content(void *content)
 {
-	t_input *node;
+	t_input	*node;
 
 	node = content;
 	ft_free_matrix(&node->full_cmd);
-	// free(node->full_path);
 	if (node->pipein != STDIN_FILENO)
 		close(node->pipein);
 	if (node->pipeout != STDOUT_FILENO)
-	{
 		close(node->pipeout);
-	}
-	// free(node);
 }

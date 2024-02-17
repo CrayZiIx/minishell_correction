@@ -6,15 +6,15 @@
 /*   By: jolecomt <jolecomt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:26:58 by jolecomt          #+#    #+#             */
-/*   Updated: 2024/02/14 17:53:07 by jolecomt         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:42:09 by jolecomt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-extern t_glob	global;
+extern t_glob	g_global;
 
-void print_error_heredoc(char c, int *i)
+void	print_error_heredoc(char c, int *i)
 {
 	if (c == '<')
 		ft_putendl_fd("minishell: syntax error near unexpected token '<' or '<<'", 2);
@@ -22,10 +22,10 @@ void print_error_heredoc(char c, int *i)
 		ft_putendl_fd("minishell: syntax error near unexpected token '>' or '>>'", 2);
 	else
 		ft_putendl_fd("minishell: syntax error near unexpected token 'newline", 2);
-	global.g_state = 2;
+	g_global.g_state = 2;
 	(*i) = -2;
 }
-int get_fd(int oldfd, char *path, int flags[2])
+int	get_fd(int oldfd, char *path, int flags[2])
 {
 	int fd;
 
@@ -63,7 +63,7 @@ t_input	*get_pipeout1(t_input *node, char **args, int *i)
 		if (node->pipeout != -1)
 			print_error_heredoc('0', i);
 		else
-			global.g_state = 1;
+			g_global.g_state = 1;
 	}
 	return (node);
 }
@@ -90,7 +90,7 @@ t_input *get_pipeout2(t_input *node, char **args, int *i)
 			print_error_heredoc('0', i);
 		}
 		else
-			global.g_state = 1;
+			g_global.g_state = 1;
 	}
 	return (node);
 }
@@ -110,7 +110,7 @@ t_input *get_pipein1(t_input *node, char **args, int *i)
 		if (node->pipein != -1)
 			print_error_heredoc('0', i);
 		else
-			global.g_state = 1;
+			g_global.g_state = 1;
 	}
 	return (node);
 }
